@@ -5,6 +5,14 @@ import reducer from '../src/reducer';
 
 describe('reducer', () => {
 
+  it('has an initial state', () => {
+    const action = {type: 'SET_ENTRIES', entries: ['Trainspotting']};
+    const nextState = reducer(undefined, action);
+    expect(nextState).to.equal(fromJS({
+      entries: ['Trainspotting']
+    }));
+  });
+
   it('handles SET_ENTRIES', () => {
     const initialState = Map();
     const action = {type: 'SET_ENTRIES', entries: ['Trainspotting']};
@@ -16,7 +24,9 @@ describe('reducer', () => {
   });
 
   it('handles NEXT', () => {
-    const initialState = Map();
+    const initialState = fromJS({
+      entries: ['Trainspotting', '28 Days Later']
+    });
     const action = {type: 'NEXT'};
     const nextState = reducer(initialState, action);
 
@@ -41,19 +51,9 @@ describe('reducer', () => {
     expect(nextState).to.equal(fromJS({
       vote: {
         pair: ['Trainspotting', '28 Days Later'],
-        talley: {
-          Trainspotting: 1
-        }
+        tally: {Trainspotting: 1}
       },
       entries: []
-    }));
-  });
-
-  it('has an initial state', () => {
-    const action = {type: 'SET_ENTRIES', entries: ['Trainspotting']};
-    const nextState = reducer(undefined, action);
-    expect(nextState).to.equal(fromJS({
-      entries: ['Trainspotting']
     }));
   });
 
